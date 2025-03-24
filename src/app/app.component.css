@@ -6,28 +6,30 @@
 }
 
 .center{
-    background-color: blue;
+    background-color: rgb(37, 34, 34);
     width: 60%;
+    box-shadow: 3px 3px 8px rgb(255, 245, 245);
 }
 
 .left-side{
-    background-color: red;
+    background-color: rgb(37, 34, 34);;
     width: 20%;
 }
 
 .right-side{
-    background-color: green;
+    background-color: rgb(37, 34, 34);;
     width: 20%;
+    box-shadow: 3px 3px 8px rgb(255, 245, 245);
 }
 
 .main{
-    background-color: cadetblue;
+    background-color: rgb(37, 34, 34);;
     width: 100%;
     height: 100%;
 }
 .navig{
     width: 100%;
-    background-color: rgb(5, 17, 85);
+    background-color: rgb(55, 59, 71);
     bottom: 0;
     left:0;
     z-index: 1000;
