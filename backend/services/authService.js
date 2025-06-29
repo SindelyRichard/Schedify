@@ -1,10 +1,11 @@
 const User = require('../models/User');
+const jwtService = require('../services/jwtService');
 
 async function registerUser(username, password) {
     if(!username || !password) {
         return {success: false, message: 'Username and password are required'};
     }else{
-    const existingUser = await User.find({username});
+    const existingUser = await User.findOne({username});
     if(existingUser){
         return {success: false, message: 'Username already exists'};
     }else{

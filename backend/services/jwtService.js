@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 
 const SECRET = process.env.JWT_SECRET;
 if (!SECRET) {
-    throw new Error('JWT_SECRET környezeti változó nincs beállítva!');
+    throw new Error('JWT_SECRET not set!');
 }
 
 function generateToken(payload) {
