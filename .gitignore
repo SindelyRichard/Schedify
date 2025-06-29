@@ -28,11 +28,8 @@ yarn-error.log
 !.vscode/extensions.json
 .history/*
 
-# Angular
-.angular/cache
-
 # Miscellaneous
-/.angular/cache
+.angular/cache
 .sass-cache/
 /connect.lock
 /coverage
