@@ -29,6 +29,7 @@ export class LoginComponent {
   onLogin(){
     this.apiService.login(this.username,this.password).subscribe({
       next:(res) => {
+        localStorage.setItem('username',this.username);
         this.router.navigate(['/home']);
       },
       error:(err) => {
@@ -36,7 +37,4 @@ export class LoginComponent {
       }
     });
   }
-
- 
-
 }

@@ -1,7 +1,13 @@
 <main class="main">
   <div class="content">
     <div class="left-side">
-      asd
+      <div class="profile">
+        <div class="profile-info">
+        <img src="profile.jpg" alt="Profile-pic" class="profile-pict">
+        <p class="welcome"><b>{{username}}</b></p>
+        </div>
+        <button type="button" (click)="onLogout()">Logout</button>
+      </div>
     </div>
     <div class="center">
       <app-welcome></app-welcome>

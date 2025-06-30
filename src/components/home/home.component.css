@@ -1,40 +1,140 @@
-.content{
+/* Alap háttér */
+.main {
+    background: linear-gradient(135deg, #0a1833 0%, #1e3c72 100%);
+    width: 100vw;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+
+/* Tartalom középre igazítása */
+.content {
     display: flex;
     justify-content: center;
+    align-items: flex-start;
     width: 100%;
-    height: 100%;
+    min-height: 90vh;
+    gap: 2rem;
+    padding-top: 2rem;
 }
 
-.center{
-    background-color: rgb(37, 34, 34);
+/* Oldalsávok */
+.left-side, .right-side {
+    background: #101522;
+    width: 18%;
+    min-width: 180px;
+    min-height: 400px;
+    border-radius: 18px;
+    box-shadow: 0 4px 24px rgba(30,60,114,0.12);
+    padding: 1.5rem 1rem;
+    color: #b0c4de;
+}
+
+/* Középső tartalom */
+.center {
+    background: #181f36;
     width: 60%;
-    box-shadow: 3px 3px 8px rgb(255, 245, 245);
-    color: white;
-    padding: 10px;
+    min-width: 320px;
+    border-radius: 18px;
+    box-shadow: 0 4px 24px rgba(30,60,114,0.18);
+    color: #fff;
+    padding: 2rem 2rem;
 }
 
-.left-side{
-    background-color: rgb(37, 34, 34);;
-    width: 20%;
+/* Profil sáv */
+.profile {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 2px solid #1e3c72;
+    padding-bottom: 1rem;
+    margin-bottom: 1.5rem;
+    background: transparent;
 }
 
-.right-side{
-    background-color: rgb(37, 34, 34);;
-    width: 20%;
-    box-shadow: 3px 3px 8px rgb(255, 245, 245);
+.profile-info {
+    display: flex;
+    align-items: center;
 }
 
-.main{
-    background-color: rgb(37, 34, 34);;
-    width: 100%;
-    height: 100%;
+.profile-pict {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 14px;
+    border: 2px solid #1e3c72;
+    background: #fff;
 }
-.navig{
-    width: 100%;
-    background-color: rgb(55, 59, 71);
+
+.welcome {
+    color: #b0c4de;
+    font-size: 1.2rem;
+    margin-left: 0;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+/* Gombok */
+button {
+    padding: 0.5rem 1.2rem;
+    border: none;
+    border-radius: 8px;
+    background: linear-gradient(90deg, #1e3c72 60%, #0a1833 100%);
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, box-shadow 0.2s;
+    margin-right: 0;
+    box-shadow: 0 2px 8px rgba(30,60,114,0.08);
+}
+button:hover {
+    background: linear-gradient(90deg, #2563eb 60%, #1e3c72 100%);
+    box-shadow: 0 4px 16px rgba(30,60,114,0.18);
+}
+
+/* Navigációs sáv */
+.navig {
+    width: 100vw;
+    background: #0a1833;
     bottom: 0;
-    left:0;
+    left: 0;
     z-index: 1000;
-    height: 4%;
+    height: 56px;
     position: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 -2px 12px rgba(30,60,114,0.18);
+}
+
+.navig button {
+    background: #1e3c72;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    margin: 0 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: none;
+    transition: background 0.2s;
+}
+.navig button:hover {
+    background: #2563eb;
+}
+
+@media (max-width: 900px) {
+    .content {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 1rem;
+        padding: 1rem;
+    }
+    .left-side, .right-side, .center {
+        width: 100%;
+        min-width: unset;
+        margin-bottom: 1rem;
+    }
 }
