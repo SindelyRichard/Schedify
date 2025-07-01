@@ -4,43 +4,95 @@ import { MatIconModule } from '@angular/material/icon';
 import { WelcomeComponent } from '../welcome/welcome.component';
 import { Router } from '@angular/router';
 import { ApiService } from '../../service';
+import { CommonModule } from '@angular/common';
+
+const NEXT_LEVEL_UP = 1000;
 
 @Component({
   selector: 'app-home',
-  imports: [ WelcomeComponent,MatButtonModule,MatIconModule],
+  imports: [WelcomeComponent, MatButtonModule, MatIconModule,CommonModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
-  username:string = '';
-  level:number = 0;
-  xp:number=0;
-  nextLevelUp:number = 1000;
+  username: string = '';
+  level: number = 0;
+  xp: number = 0;
+  dailyTasks:any[] = [];
 
-  constructor(private router: Router, private apiService:ApiService) {
-    if (typeof window !== 'undefined' && window.localStorage) {
-      this.username = localStorage.getItem('username') || '';
-    }
+  get nextLevelUp(){
+    return NEXT_LEVEL_UP;
   }
 
-   onLogout(){
-    if (typeof window !== 'undefined' && window.localStorage) {
-      this.apiService.logout();
-      localStorage.removeItem('username');
-    }
-    this.router.navigate(['/login']);
-  }
+  constructor(private router: Router, private apiService: ApiService) {
 
-  ngOnInit(){
-    this.apiService.getLvlAndXp(this.username).subscribe({
-      next:(res) => {
-        this.level = res.level;
-        this.xp = res.xp;
+  }
+  ngOnInit() {
+    this.apiService.getLvlAndXp().subscribe({
+    next: (res) => {
+      this.level = res.level;
+      this.xp = res.xp;
+    },
+    error: (err) => {
+      if (err.status === 401) {
+        this.router.navigate(['/login']);
       }
+    }
+  });
+  this.apiService.getDailyTask().subscribe({
+    next: (tasks: any) => {
+      this.dailyTasks = tasks;
+    },
+    error: (err) => {
+      if (err.status === 401) {
+        this.router.navigate(['/login']);
+      }
+    }
+  });
+    this.loadTasks();
+  }
+
+  levelUpIfNeeded() {
+    if (this.xp >= this.nextLevelUp) {
+      this.xp -= this.nextLevelUp;
+      this.level += 1;
+    }
+    this.apiService.updateLevelAndXp(this.level, this.xp).subscribe();
+
+  }
+  get xpPercent() {
+    return Math.min(100, (this.xp / this.nextLevelUp) * 100)
+  }
+
+  toggleTaskComplete(task: any) {
+    if (task.completed) return;
+    this.apiService.completeTask(task._id).subscribe({
+        next: (updatedTask: any) => {
+            task.completed = true;
+            this.xp += 100;
+            this.levelUpIfNeeded();
+        }
     });
 }
- get xpPercent(){
-  return Math.min(100,(this.xp/this.nextLevelUp)*100)
- }
+loadTasks() {
+  this.apiService.getDailyTask().subscribe({
+    next: (tasks: any) => {
+      this.dailyTasks = tasks;
+    },
+    error: (err) => {
+      if (err.status === 401) {
+        this.router.navigate(['/login']);
+      }
+    }
+  });
+}
+
+onLogout() {
+  this.apiService.logout().subscribe({
+    next: () => {
+      this.router.navigate(['/login']);
+    }
+  });
+}
 
 }

@@ -9,6 +9,20 @@ async function getLevelAndXp(username) {
     return { success: true, xp:user.xp,level:user.level };
 }
 
+async function updateLvlXp(username,level,xp){
+    const user = await User.findOneAndUpdate(
+        {username},
+        {level,xp},
+        {new:true}
+    );
+    if (!user) {
+        return { success: false, message: 'User not found!' };
+    }
+    return { success: true, user };
+
+}
+
 module.exports = {
-    getLevelAndXp
+    getLevelAndXp,
+    updateLvlXp
 };

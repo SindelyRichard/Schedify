@@ -149,3 +149,11 @@ button:hover {
     font-size: 1rem;
     font-weight: 600;
 }
+
+input[type="checkbox"] {
+  display: inline-block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  width: 16px;
+  height: 16px;
+}

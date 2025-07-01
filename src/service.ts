@@ -10,23 +10,35 @@ export class ApiService {
 
     constructor(private http: HttpClient) { }
 
-    register(username: string, password: string): Observable<any> {
-        return this.http.post(`${this.apiUrl}/register`, { username, password });
+    getLvlAndXp(): Observable<any> {
+        return this.http.get(`${this.apiUrl}/getLevelXp`, { withCredentials: true });
+    }
+
+    updateLevelAndXp(level: number, xp: number) {
+        return this.http.post(`${this.apiUrl}/updateLevelXp`, { level, xp }, { withCredentials: true });
+    }
+
+    getDailyTask() {
+        return this.http.get(`${this.apiUrl}/getDailyTask`, { withCredentials: true });
+    }
+
+    completeTask(taskId: string) {
+        return this.http.patch(`${this.apiUrl}/tasks/${taskId}/complete`, {}, { withCredentials: true });
     }
 
     login(username: string, password: string): Observable<any> {
-        return this.http.post(`${this.apiUrl}/login`, { username, password });
+        return this.http.post(`${this.apiUrl}/login`, { username, password }, { withCredentials: true });
     }
 
-    logout(): void {
-        localStorage.removeItem('token');
+    register(username: string, password: string): Observable<any> {
+        return this.http.post(`${this.apiUrl}/register`, { username, password }, { withCredentials: true });
     }
 
-    getLvlAndXp(username: string): Observable<any> {
-        return this.http.get(`${this.apiUrl}/getLevelXp?username=${username}`, {
-            headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }
-        })
-
+    logout() {
+        return this.http.post(`${this.apiUrl}/logout`, {}, { withCredentials: true });
     }
+
 
 }
+
+

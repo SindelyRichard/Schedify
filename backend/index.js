@@ -3,13 +3,19 @@ dotenv.config({ path: 'ini.env' });
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
 
 const  authController  = require('./controllers/authController');
 const  userController  = require('./controllers/userController');
+const  taskController  = require('./controllers/taskController');
 
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:4200',
+  credentials:true
+}));
 app.use(express.json());
+app.use(cookieParser());
 
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('MongoDB connected'))
@@ -21,5 +27,9 @@ app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 app.post('/api/register', authController.register);
 app.post('/api/login', authController.login);
 app.get('/api/getLevelXp',userController.getLvlXp);
+app.post('/api/updateLevelXp',userController.updateLevelXp);
+app.get('/api/getDailyTask',taskController.getDailyTasks);
+app.patch('/api/tasks/:id/complete', taskController.setTask);
+app.post('/api/logout',authController.logout);
 
 
