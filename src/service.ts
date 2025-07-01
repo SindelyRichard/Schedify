@@ -10,16 +10,23 @@ export class ApiService {
 
     constructor(private http: HttpClient) { }
 
-    register(username: string, password: string): Observable<any>{
+    register(username: string, password: string): Observable<any> {
         return this.http.post(`${this.apiUrl}/register`, { username, password });
     }
 
-    login(username: string, password:string):Observable<any>{
-        return this.http.post(`${this.apiUrl}/login`,{username, password});
+    login(username: string, password: string): Observable<any> {
+        return this.http.post(`${this.apiUrl}/login`, { username, password });
     }
 
-    logout():void {
+    logout(): void {
         localStorage.removeItem('token');
     }
-    
+
+    getLvlAndXp(username: string): Observable<any> {
+        return this.http.get(`${this.apiUrl}/getLevelXp?username=${username}`, {
+            headers: { Authorization: 'Bearer ' + localStorage.getItem('token') }
+        })
+
+    }
+
 }

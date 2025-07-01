@@ -12,10 +12,14 @@ import { ApiService } from '../../service';
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
-  username:string|null = '';
+  username:string = '';
+  level:number = 0;
+  xp:number=0;
+  nextLevelUp:number = 1000;
+
   constructor(private router: Router, private apiService:ApiService) {
     if (typeof window !== 'undefined' && window.localStorage) {
-      this.username = localStorage.getItem('username');
+      this.username = localStorage.getItem('username') || '';
     }
   }
 
@@ -26,5 +30,17 @@ export class HomeComponent {
     }
     this.router.navigate(['/login']);
   }
+
+  ngOnInit(){
+    this.apiService.getLvlAndXp(this.username).subscribe({
+      next:(res) => {
+        this.level = res.level;
+        this.xp = res.xp;
+      }
+    });
+}
+ get xpPercent(){
+  return Math.min(100,(this.xp/this.nextLevelUp)*100)
+ }
 
 }

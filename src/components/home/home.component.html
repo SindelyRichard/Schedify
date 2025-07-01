@@ -18,8 +18,12 @@
 
   </div>
   <div class="navig">
-    <button mat-mini-fab> 
-      <mat-icon>home</mat-icon>
-    </button>
+  <div class="xp-bar-container">
+    <span class="level-label">Level: {{level}}</span>
+    <div class="xp-bar">
+      <div class="xp-progress" [style.width.%]="xpPercent"></div>
+    </div>
+    <span class="xp-label">{{ xp }} XP / {{ nextLevelUp }} XP</span>
   </div>
+</div>
 </main>

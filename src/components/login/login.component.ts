@@ -30,6 +30,7 @@ export class LoginComponent {
     this.apiService.login(this.username,this.password).subscribe({
       next:(res) => {
         localStorage.setItem('username',this.username);
+        localStorage.setItem('token', res.token);
         this.router.navigate(['/home']);
       },
       error:(err) => {

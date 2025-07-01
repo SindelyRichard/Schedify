@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 
 const  authController  = require('./controllers/authController');
+const  userController  = require('./controllers/userController');
 
 const app = express();
 app.use(cors());
@@ -19,5 +20,6 @@ app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
 app.post('/api/register', authController.register);
 app.post('/api/login', authController.login);
+app.get('/api/getLevelXp',userController.getLvlXp);
 
 
