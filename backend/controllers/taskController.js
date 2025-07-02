@@ -1,5 +1,5 @@
 const { verifyToken } = require('../services/jwtService');
-const { dailyTasks, setTaskCompleted } = require('../services/taskService');
+const { dailyTasks, setTaskCompleted,addTask,yourTasks } = require('../services/taskService');
 
 async function getDailyTasks(req,res){
     const token = req.cookies.token;
@@ -31,11 +31,11 @@ async function addTasks(req, res) {
         return res.status(403).json({ message: 'Invalid token' });
     }
     const username = decoded.username;
-    const { title, daily } = req.body;
+    const {title} = req.body;
     if (!title) {
         return res.status(400).json({ message: 'No title provided' });
     }
-    const result = await addTask(username, title, daily);
+    const result = await addTask(username, title);
     if (result.success) {
         res.json(result.task);
     } else {
@@ -62,8 +62,28 @@ async function setTask(req,res){
     }
 }
 
+async function getYourTask(req,res){
+    const token = req.cookies.token;
+    if(!token){
+        return res.status(401).json({message:'No token provided'});
+    }
+
+    const decoded = verifyToken(token);
+    if(!decoded){
+        return res.status(403).json({ message: 'Invalid token' });
+    }
+    const username = decoded.username;
+    const result = await yourTasks(username);
+    if (result.success) {
+        res.json(result.tasks);
+    } else {
+        res.status(500).json({ message: result.message });
+    }
+}
+
 module.exports = {
     getDailyTasks,
     addTasks,
-    setTask
+    setTask,
+    getYourTask
 };

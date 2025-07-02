@@ -5,12 +5,14 @@ import { WelcomeComponent } from '../welcome/welcome.component';
 import { Router } from '@angular/router';
 import { ApiService } from '../../service';
 import { CommonModule } from '@angular/common';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { TaskComponent } from '../task/task.component';
 
 const NEXT_LEVEL_UP = 1000;
 
 @Component({
   selector: 'app-home',
-  imports: [WelcomeComponent, MatButtonModule, MatIconModule,CommonModule],
+  imports: [WelcomeComponent, MatButtonModule, MatIconModule,CommonModule,MatDialogModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
@@ -19,12 +21,13 @@ export class HomeComponent {
   level: number = 0;
   xp: number = 0;
   dailyTasks:any[] = [];
+  yourTasks:any = [];
 
   get nextLevelUp(){
     return NEXT_LEVEL_UP;
   }
 
-  constructor(private router: Router, private apiService: ApiService) {
+  constructor(private router: Router, private apiService: ApiService,private dialog:MatDialog) {
 
   }
   ngOnInit() {
@@ -32,6 +35,7 @@ export class HomeComponent {
     next: (res) => {
       this.level = res.level;
       this.xp = res.xp;
+      this.username = res.username;
     },
     error: (err) => {
       if (err.status === 401) {
@@ -49,7 +53,20 @@ export class HomeComponent {
       }
     }
   });
+  this.apiService.getYourTask().subscribe({
+    next: (tasks: any) => {
+      this.yourTasks = tasks;
+    },
+    error: (err) => {
+      if (err.status === 401) {
+        this.router.navigate(['/login']);
+      }
+    }
+  });
+
+
     this.loadTasks();
+    this.loadYourTasks();
   }
 
   levelUpIfNeeded() {
@@ -93,6 +110,28 @@ onLogout() {
       this.router.navigate(['/login']);
     }
   });
+}
+
+addTask(){
+  this.dialog.open(TaskComponent,{
+    width:'600px',
+    height:'400px'
+  });
+
+}
+
+loadYourTasks(){
+  this.apiService.getYourTask().subscribe({
+    next: (tasks: any) => {
+      this.yourTasks = tasks;
+    },
+    error: (err) => {
+      if (err.status === 401) {
+        this.router.navigate(['/login']);
+      }
+    }
+  });
+
 }
 
 }

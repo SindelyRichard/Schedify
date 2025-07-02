@@ -31,5 +31,7 @@ app.post('/api/updateLevelXp',userController.updateLevelXp);
 app.get('/api/getDailyTask',taskController.getDailyTasks);
 app.patch('/api/tasks/:id/complete', taskController.setTask);
 app.post('/api/logout',authController.logout);
+app.post('/api/addTask',taskController.addTasks);
+app.get('/api/getYourTask',taskController.getYourTask);
 
 

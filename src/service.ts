@@ -38,6 +38,14 @@ export class ApiService {
         return this.http.post(`${this.apiUrl}/logout`, {}, { withCredentials: true });
     }
 
+    addTask(title:string):Observable<any>{
+        return this.http.post(`${this.apiUrl}/addTask`,{title},{withCredentials:true});
+    }
+
+    getYourTask(){
+        return this.http.get(`${this.apiUrl}/getYourTask`, { withCredentials: true });
+    }
+
 
 }
 

@@ -17,7 +17,7 @@ async function getLvlXp(req,res){
     }
     const result = await getLevelAndXp(username);
     if(result.success){
-        res.json({xp:result.xp,level:result.level });
+        res.json({xp:result.xp,level:result.level,username });
     }else{
         res.status(404).json({ message: result.message });
     }

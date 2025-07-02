@@ -1,0 +1,11 @@
+<div class="main">
+    <h1>Add Task</h1>
+    <div class="container">
+        <form>
+            <label for="username">Title:</label>
+            <input type="text" id="title" name="title" [(ngModel)]="title" required>
+
+            <button type="button" (click)="addTask()">Add</button>
+        </form>
+    </div>
+</div>
