@@ -8,6 +8,7 @@ const cookieParser = require('cookie-parser');
 const  authController  = require('./controllers/authController');
 const  userController  = require('./controllers/userController');
 const  taskController  = require('./controllers/taskController');
+const mainController = require('./controllers/mainController');
 
 const app = express();
 app.use(cors({
@@ -33,5 +34,7 @@ app.patch('/api/tasks/:id/complete', taskController.setTask);
 app.post('/api/logout',authController.logout);
 app.post('/api/addTask',taskController.addTasks);
 app.get('/api/getYourTask',taskController.getYourTask);
+app.get('/api/getMotivation',mainController.getMotivations);
+app.get('/api/getTopUsers',userController.getTopPlayers);
 
 

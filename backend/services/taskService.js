@@ -18,6 +18,11 @@ async function addTask(username, title) {
         const daily = false;
         const user = await User.findOne({ username });
         if (!user) return { success: false, message: 'User not found' };
+        const taskCount = await Task.countDocuments({ userId:user._id,daily:false });
+
+        if (taskCount >= 5) {
+            return { success: false, message: 'Reached maximum task!' };
+        }
         const task = new Task({ userId:user._id, title, daily });
         await task.save();
         return { success: true, task };

@@ -1,4 +1,4 @@
-const { getLevelAndXp, updateLvlXp } = require('../services/userService');
+const { getLevelAndXp, updateLvlXp, topUsers } = require('../services/userService');
 const { verifyToken } = require('../services/jwtService');
 
 async function getLvlXp(req,res){
@@ -45,7 +45,28 @@ async function updateLevelXp(req,res){
 
 }
 
+async function getTopPlayers(req,res){
+    const token = req.cookies.token;
+    if(!token){
+        return res.status(401).json({message:'No token provided'});
+    }
+
+    const decoded = verifyToken(token);
+    if(!decoded){
+        return res.status(403).json({ message: 'Invalid token' });
+    }
+    const result = await topUsers();
+
+    if(result.success){
+        res.json({players:result.players });
+    }else{
+        res.status(404).json({ message: result.message });
+    }
+
+}
+
 module.exports = {
     getLvlXp,
-    updateLevelXp
+    updateLevelXp,
+    getTopPlayers
 };

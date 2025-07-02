@@ -23,6 +23,16 @@
     </div>
     <div class="center">
       <app-welcome></app-welcome>
+      <div class="motiv">
+        <h2>Random motivation for you:</h2>
+        <span class="motiv-text">{{motivation}}</span>
+      </div>
+      <div class="top-users">
+        <h2>Top 3 users:</h2>
+        <div *ngFor="let user of topUsers">
+          <p class="top">{{user}}</p><br>
+        </div>
+      </div>
     </div>
     <div class="right-side">
       <div style="flex:1; border-right:1px solid #ccc; padding:10px;">

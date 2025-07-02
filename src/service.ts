@@ -46,6 +46,14 @@ export class ApiService {
         return this.http.get(`${this.apiUrl}/getYourTask`, { withCredentials: true });
     }
 
+    getMotivation(){
+        return this.http.get(`${this.apiUrl}/getMotivation`,{withCredentials:true});
+    }
+
+    getTopUser(){
+        return this.http.get(`${this.apiUrl}/getTopUsers`,{withCredentials:true});
+    }
+
 
 }
 

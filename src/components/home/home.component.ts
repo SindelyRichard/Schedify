@@ -22,6 +22,8 @@ export class HomeComponent {
   xp: number = 0;
   dailyTasks:any[] = [];
   yourTasks:any = [];
+  motivation:string = '';
+  topUsers:any[] = [];
 
   get nextLevelUp(){
     return NEXT_LEVEL_UP;
@@ -56,6 +58,30 @@ export class HomeComponent {
   this.apiService.getYourTask().subscribe({
     next: (tasks: any) => {
       this.yourTasks = tasks;
+    },
+    error: (err) => {
+      if (err.status === 401) {
+        this.router.navigate(['/login']);
+      }
+    }
+  });
+
+  this.apiService.getMotivation().subscribe({
+    next: (res:any) => {
+      this.motivation = res.title;
+
+    },
+    error: (err) => {
+      if (err.status === 401) {
+        this.router.navigate(['/login']);
+      }
+    }
+  });
+
+  this.apiService.getTopUser().subscribe({
+    next: (res:any) => {
+      this.topUsers = res.players.map((player: any) => player.username);
+      console.log(res.players.username);
     },
     error: (err) => {
       if (err.status === 401) {
@@ -113,11 +139,13 @@ onLogout() {
 }
 
 addTask(){
-  this.dialog.open(TaskComponent,{
+  const dialogRef=this.dialog.open(TaskComponent,{
     width:'600px',
     height:'400px'
   });
-
+  dialogRef.afterClosed().subscribe(() => {
+    this.loadYourTasks();
+  });
 }
 
 loadYourTasks(){

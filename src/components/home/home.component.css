@@ -157,3 +157,18 @@ input[type="checkbox"] {
   width: 16px;
   height: 16px;
 }
+
+.motiv-text{
+    font-size: larger;
+}
+
+.top{
+    font-size: larger;
+}
+
+.top-users{
+    box-shadow: 0 -2px 12px rgba(30,60,114,0.18);
+    padding: 36px;
+    margin-top: 20px;
+
+}

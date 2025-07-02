@@ -22,7 +22,21 @@ async function updateLvlXp(username,level,xp){
 
 }
 
+async function topUsers(){
+    try {
+        const topPlayers = await User.find()
+            .sort({ level: -1 })
+            .limit(3);
+
+        return { success: true, players: topPlayers };
+    } catch (err) {
+        console.error(err);
+        return { success: false, message: 'Server error' };
+    }
+}
+
 module.exports = {
     getLevelAndXp,
-    updateLvlXp
+    updateLvlXp,
+    topUsers
 };
